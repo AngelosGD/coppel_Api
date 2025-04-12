@@ -1,14 +1,23 @@
-import { Image, StyleSheet, Platform, View } from 'react-native';
-
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <View>
-      
+      <TextInput
+        placeholder="Número de empleado"
+        keyboardType="numeric"
+      />
+      <TextInput
+        placeholder="Contraseña"
+        secureTextEntry={true}
+      />
+      <Button
+        title="Iniciar sesión"
+        onPress={() => {}}
+      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',

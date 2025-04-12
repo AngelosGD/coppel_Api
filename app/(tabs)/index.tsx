@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } fr
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { app, auth } from '../../firebase';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Redirect, useRouter} from 'expo-router'
+
 
 
 export default function HomeScreen() {
@@ -11,6 +13,8 @@ export default function HomeScreen() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const router = useRouter();
 
   const handleLogin = () => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -22,6 +26,7 @@ export default function HomeScreen() {
       .then((userCredential) => {
         const user = userCredential.user;
         Alert.alert('Inicio con exito!!', `Bienvenido, ${user.email}`);
+        router.push('/home');
       })
       .catch((error) => {
         Alert.alert('Ups!, algo salio mal', error.message);
@@ -34,141 +39,87 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-    <View>
-      <Text style={styles.title}>Login</Text>
-    </View>
-    <View>
-      <Text style={styles.titleLogin}>
-        Please login to continue.
+    <Text style={styles.title}>Inicio de sesion - Colaboradores</Text>
+    
+    <TextInput
+      style={styles.input}
+      placeholder="coppel@gmail.comsd"
+      value={email}
+      onChangeText={setEmail}
+      keyboardType="email-address"
+    />
+    
+    <TextInput
+      style={styles.input}
+      placeholder="Contraseña"
+      secureTextEntry
+      value={password}
+      onChangeText={setPassword}
+    />
+    
+    <TouchableOpacity 
+      style={styles.button} 
+      onPress={handleLogin}
+      disabled={isLoading}
+    >
+      <Text style={styles.buttonText}>
+        {isLoading ? 'Cargando...' : 'Ingresar'}
       </Text>
-    </View>
-    <View style={styles.inputContainer}>
-      <View style={styles.inputWrapper}>
-        <MaterialIcons
-          name="mail"
-          size={20}
-          color="#9d9d9d"
-          style={styles.icon}
-        />
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.inputWrapper}>
-        <MaterialIcons
-          name="lock"
-          size={20}
-          color="#9d9d9d"
-          style={styles.icon}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          onSubmitEditing={handleLogin}
-          secureTextEntry={!isPasswordVisible} // Bổ sung thuộc tính secureTextEntry để ẩn mật khẩu
-          style={styles.textInput}
-        />
-        <TouchableOpacity onPress={togglePasswordVisibility}>
-          <MaterialIcons
-            name={isPasswordVisible ? "visibility" : "visibility-off"}
-            size={20}
-            color="#9d9d9d"
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.registerContainer}>
-        <TouchableOpacity
-        >
-          <Text style={styles.registerText}>
-            Don’t have an account? <Text style={styles.registerLink}>Sign Up</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity onPress={handleLogin}>
-        <View style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>
-            {isLoading ? "Logging in..." : "Login"}
-          </Text>
-        </View>
-      </TouchableOpacity>
-
-      <View style={styles.errorMessageContainer}>
-        <Text style={styles.errorMessage}>{errorMessage}</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
+    
+    <TouchableOpacity style={styles.link }>
+      <Text style={styles.colorLink}>Tu cuenta no funciona?. ponte en contacto con el soporte de coppel</Text>
+    </TouchableOpacity>
   </View>
+
 );
 
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
   },
   title: {
-    color: "#5F5F5F",
-    fontSize: 25,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 40,
   },
-  titleLogin: {
-    color: "#5F5F5F",
-    fontSize: 15,
+  input: {
+    width: '80%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 15,
+  },
+  button: {
+    width: '80%',
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
     marginTop: 10,
   },
-  inputContainer: {
-    width: "80%",
+  buttonText: {
+    color: 'white',
+  },
+  link: {
     marginTop: 20,
-    gap: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80%',
+    height: 40,
+    
   },
-  inputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    borderWidth: 0.2,
-    borderRadius: 5,
-  },
-  textInput: {
-    flex: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  registerContainer: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-  },
-  registerText: {
-    color: "#5F5F5F",
-  },
-  registerLink: {
-    color: "#456FE8",
-    fontWeight: "600",
-  },
-  loginButton: {
-    backgroundColor: "#456FE8",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 15,
-  },
-  errorMessageContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorMessage: {
-    color: "red",
-  },
+  colorLink: {
+    color: '#007bff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 12,
+  }
 });

@@ -3,3 +3,8 @@ En 1969, diversos programas sociales comunitarios, llamados programas de supervi
 
 
 aqui usemos para poner comentarios xd
+
+-- Numeros de empleados para iniciar sesion --
+MAN1
+FM1
+AG1

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import {useRouter} from 'expo-router';
+import { styles } from './styles';
 
 export default function ListaPymes() {
     const router = useRouter();
@@ -11,7 +12,7 @@ export default function ListaPymes() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Lista de Pymes</Text>
-            <TouchableOpacity style={styles.buttonPymes} onPress={handleListReturn}>
+            <TouchableOpacity style={styles.button} onPress={handleListReturn}>
                 <Text style={styles.buttonText}>Volver</Text>
             </TouchableOpacity>
 
@@ -19,16 +20,3 @@ export default function ListaPymes() {
         </View>
     );
 }
-const styles = StyleSheet.create({
-    buttonPymes: {
-        width: '80%',
-        backgroundColor: '#007bff',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    buttonText: {
-        color: 'white',
-    },
-})

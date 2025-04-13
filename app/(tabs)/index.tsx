@@ -3,7 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } fr
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { app, auth } from '../../firebase';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Redirect, useRouter} from 'expo-router'
+import { useRouter} from 'expo-router'
+import { isLoaded } from 'expo-font';
 
 
 
@@ -13,6 +14,9 @@ export default function HomeScreen() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  
 
   const router = useRouter();
 
@@ -27,6 +31,7 @@ export default function HomeScreen() {
         const user = userCredential.user;
         Alert.alert('Inicio con exito!!', `Bienvenido, ${user.email}`);
         router.push('/home');
+        setIsLoggedIn(true);
       })
       .catch((error) => {
         Alert.alert('Ups!, algo salio mal', error.message);

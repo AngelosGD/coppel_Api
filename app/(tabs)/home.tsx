@@ -2,47 +2,48 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles } from './styles';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 
-export default function window() {
-    const router = useRouter();
-    const params = useLocalSearchParams();
+export default function Home() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  const nombreEmpleado = params.nombreEmpleado || 'Colaborador';
 
-    // Obtiene el nombre del parámetro de navegación
-    const nombreEmpleado = params.nombreEmpleado || 'Colaborador';
-
-    const handleRegister = () => {
-        router.push('/registrarPymes');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.replace('/');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
     }
+  };
 
-    const handleList = () => {
-        router.push('/listaPymes');
-    }
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>
+        Hola {nombreEmpleado}!
+      </Text>
 
-    const handleGeolocation = () => {
-        router.push('/geolocalizacion');
-    }
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            {/* Muestra el nombre del empleado */}
-            <Text style={{ fontSize: 20, marginBottom: 20 }}>
-                Hola {nombreEmpleado}!
-            </Text>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/registrarPymes')}>
+        <Text style={styles.buttonText}>Registrar PYMES</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => { }}>
-                <Text style={styles.buttonText} onPress={handleRegister}>
-                    Registrar PYMES
-                </Text>
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/listaPymes')}>
+        <Text style={styles.buttonText}>Lista de Pymes</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleList}>
-                <Text style={styles.buttonText}>Lista de Pymes</Text>
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/geolocalizacion')}>
+        <Text style={styles.buttonText}>Geolocalización</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleGeolocation}>
-                <Text style={styles.buttonText}>Geolocalizacion</Text>
-            </TouchableOpacity>
-
-        </View>
-    );
+      {/* Botón de cerrar sesión */}
+      <TouchableOpacity 
+        style={[styles.button, { backgroundColor: '#ff4444', marginTop: 30 }]} 
+        onPress={handleLogout}
+      >
+        <Text style={styles.buttonText}>Cerrar sesión</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
-

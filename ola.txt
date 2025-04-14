@@ -5,6 +5,7 @@ En 1969, diversos programas sociales comunitarios, llamados programas de supervi
 aqui usemos para poner comentarios xd
 
 -- Numeros de empleados para iniciar sesion --
-MAN1
-FM1
-AG1
+MAN1 - mariana
+FM1 - fernando
+AG1 - angel
+CE1 - cesar

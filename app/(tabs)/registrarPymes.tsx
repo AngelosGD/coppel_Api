@@ -30,10 +30,11 @@ export default function RegistrarPymes() {
     setIsSubmitting(true);
 
     try {
-      // Agregar documento a la colección "pymes" (se creará automáticamente si no existe)
+      // Agregar documento con solo syncStatus
       await addDoc(collection(db, 'pymes'), {
         ...formData,
-        fechaRegistro: new Date().toISOString()
+        fechaRegistro: new Date().toISOString(),
+        syncStatus: 'pending' // 👈 Único campo necesario para sincronización
       });
 
       Alert.alert('Éxito', 'PYME registrada correctamente');

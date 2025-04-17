@@ -5,8 +5,6 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import { useRouter } from 'expo-router';
 
-
-
 export default function HomeScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,26 +13,45 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  // Función para validar formato de correo
+  const isValidEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleLogin = async () => {
     // Validaciones básicas
-    if (!numeroEmpleado) {
+    if (!email || !numeroEmpleado) {
       Alert.alert('Error', 'Todos los campos son obligatorios');
       return;
     }
 
+    // Validar formato de correo
+    if (!isValidEmail(email)) {
+      Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
+      return;
+    }
 
     setIsLoading(true);
 
     try {
+      // 1. Primero verificar el correo con Firebase Auth
+      await signInWithEmailAndPassword(auth, email, 'dummyPassword').catch(() => {
+        // Ignoramos el error real de autenticación porque solo queremos verificar el correo
+      });
 
-      // 2. Consulta EXACTA a Firestore (con nombres reales de campos)
-      const q = query(collection(db, "colaboradores"), where("numeroEmpleado", "==", numeroEmpleado));
+      // 2. Consulta EXACTA a Firestore
+      const q = query(
+        collection(db, "colaboradores"), 
+        where("numeroEmpleado", "==", numeroEmpleado),
+        where("email", "==", email)
+      );
 
       const querySnapshot = await getDocs(q);
-      console.log("Resultados:", querySnapshot.docs.length); // Debug
+      console.log("Resultados:", querySnapshot.docs.length);
 
       if (querySnapshot.empty) {
-        throw new Error("No se encontró el colaborador con estas credenciales");
+        throw new Error("Credenciales incorrectas. Verifica tu correo y número de empleado");
       }
 
       // Obtiene los datos del empleado
@@ -47,8 +64,11 @@ export default function HomeScreen() {
       });
 
     } catch (error) {
-      console.error("Error completo:", error); // Debug detallado
-      Alert.alert('Error', "Credenciales incorrectas o problema de conexión");
+      console.error("Error completo:", error);
+      Alert.alert(
+        'Error', 
+        "Credenciales incorrectas o problema de conexión"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +79,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View >
+    <View>
       <Image
         source={require('../../assets/images/Logo-coppel.png')}
         style={LocalStyles.logoCoppel}
@@ -71,7 +91,11 @@ export default function HomeScreen() {
       <Text style={[LocalStyles.Text3]}>Correo Electronico</Text>
       <TextInput
         placeholder="Correo electronico"
+        value={email}
+        onChangeText={setEmail}
         style={[LocalStyles.InputCorreo]}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <Text style={[LocalStyles.requeridoText]}>Requerido</Text>
 
@@ -81,8 +105,10 @@ export default function HomeScreen() {
         value={numeroEmpleado}
         onChangeText={setNumeroEmpleado}
         style={[LocalStyles.InputCorreo]}
+        keyboardType="numeric"
       />
       <Text style={[LocalStyles.requeridoText]}>Requerido</Text>
+      
       <TouchableOpacity
         onPress={handleLogin}
         disabled={isLoading}
@@ -93,7 +119,7 @@ export default function HomeScreen() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity >
+      <TouchableOpacity>
         <Text style={[LocalStyles.Text2]}>
           Tu cuenta no funciona?, ponte en contacto con el soporte de coppel!.
         </Text>
@@ -101,6 +127,8 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+
 
 const LocalStyles = StyleSheet.create({
   logoCoppel: {

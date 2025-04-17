@@ -15,4 +15,20 @@ export const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
     },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        padding: 10,
+        textAlign: 'center',
+        backgroundColor: '#f5f5f5',
+    },
+    locationButton: {
+        backgroundColor: '#4CAF50',
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
 })

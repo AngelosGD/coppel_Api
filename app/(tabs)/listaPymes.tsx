@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import {useRouter} from 'expo-router';
 import { styles } from './styles';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { functions } from '../../firebase';
+
+
 
 export default function ListaPymes() {
     const router = useRouter();

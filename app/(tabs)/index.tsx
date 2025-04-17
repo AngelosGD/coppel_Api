@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, Image } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import { useRouter } from 'expo-router';
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
+
 
 export default function HomeScreen() {
   const [email, setEmail] = useState('');
@@ -58,106 +59,112 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Inicio de sesión - Colaboradores</Text>
-
-
-
-      <TextInput
-        style={styles.input}
-        placeholder="Número de empleado"
-        value={numeroEmpleado}
-        onChangeText={setNumeroEmpleado}
+    <View >
+      <Image
+        source={require('../../assets/images/Logo-coppel.png')}
+        style={LocalStyles.logoCoppel}
       />
 
+      <Text style={[LocalStyles.Text1]}>Hola!</Text>
+      <Text style={[LocalStyles.Text2]}>Inicia sesion con su correo y numero de empleado.</Text>
+
+      <Text style={[LocalStyles.Text3]}>Correo Electronico</Text>
+      <TextInput
+        placeholder="Correo electronico"
+        style={[LocalStyles.InputCorreo]}
+      />
+      <Text style={[LocalStyles.requeridoText]}>Requerido</Text>
+
+      <Text style={[LocalStyles.Text3]}>Numero de empleado</Text>
+      <TextInput
+        placeholder="Numero de empleado"
+        value={numeroEmpleado}
+        onChangeText={setNumeroEmpleado}
+        style={[LocalStyles.InputCorreo]}
+      />
+      <Text style={[LocalStyles.requeridoText]}>Requerido</Text>
       <TouchableOpacity
-        style={[styles.button, isLoading && styles.disabledButton]}
         onPress={handleLogin}
         disabled={isLoading}
+        style={[LocalStyles.ingresarButton]}
       >
-        <Text style={styles.buttonText}>
+        <Text style={[LocalStyles.textButton]}>
           {isLoading ? 'Verificando...' : 'Ingresar'}
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.link}>
-        <Text style={styles.linkText}>
-          ¿Problemas con tu cuenta? Contacta al soporte
+      <TouchableOpacity >
+        <Text style={[LocalStyles.Text2]}>
+          Tu cuenta no funciona?, ponte en contacto con el soporte de coppel!.
         </Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+const LocalStyles = StyleSheet.create({
+  logoCoppel: {
+    alignSelf: 'center',
+    marginTop: '5%',
+    transform: [{ scale: 0.8 }],
+    marginBottom: '-24%',
+  },
+  Text1: {
+    fontSize: 28,
+    fontWeight: 500,
+    textAlign: 'center',
+    color: 'blue',
+
+  },
+  Text2: {
+    fontSize: 13,
+    textAlign: 'center',
+    color: 'blue',
+    opacity: 0.65,
+    marginBottom: '5%',
+    marginTop: '2%',
+  },
+  Text3: {
+    fontSize: 14.5,
+    fontWeight: 500,
+    textAlign: 'left',
+    marginTop: '5%',
+    paddingLeft: '6%',
+  },
+  InputCorreo: {
+    height: 45,
+    width: '90%',
+    borderRadius: 10,
+    backgroundColor: '#F2F2F2',
+    paddingLeft: '2%',
+    borderColor: '#E0E0E0',
+    borderWidth: 2,
+    alignSelf: 'center',
+  },
+  requeridoText: {
+    fontSize: 12,
+    opacity: 0.65,
+    marginLeft: '6%',
+    marginTop: '1%',
+  },
+  ingresarButton: {
+    height: 45,
+    width: '90%',
+    borderRadius: 10,
+    backgroundColor: '#f2df38',
+    paddingLeft: '2%',
+    borderColor: 'black',
+    borderWidth: 1,
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f5f5f5',
+    marginTop: '5%',
+    
   },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    color: '#333',
-  },
-  input: {
-    width: '85%',
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    backgroundColor: '#fff',
-    fontSize: 16,
-  },
-  passwordContainer: {
-    width: '85%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  passwordInput: {
-    flex: 1,
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    backgroundColor: '#fff',
-    fontSize: 16,
-  },
-  eyeIcon: {
-    position: 'absolute',
-    right: 15,
-    padding: 10,
-  },
-  button: {
-    width: '85%',
-    height: 50,
-    backgroundColor: '#0066cc',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  disabledButton: {
-    backgroundColor: '#99c2ff',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  link: {
-    marginTop: 20,
-  },
-  linkText: {
-    color: '#0066cc',
-    fontSize: 14,
-    textDecorationLine: 'underline',
-  },
+  textButton:{
+      fontSize: 16,
+      fontWeight: 500,
+  }
+
+
 });

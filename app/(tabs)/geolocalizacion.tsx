@@ -108,7 +108,6 @@ export default function Geolocalizacion() {
 
       {/* Información de hora */}
       <View style={localStyles.timeContainer}>
-        <Text style={localStyles.timeText}>9:41</Text>
         <Text style={localStyles.subtitle}>PYMES cercanas</Text>
       </View>
 

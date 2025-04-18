@@ -6,14 +6,16 @@ import {StyleSheet} from 'react-native'
 export const styles = StyleSheet.create({
     button: {
         width: '80%',
-        backgroundColor: '#007bff',
+        backgroundColor: '#FBE23D',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
         marginTop: 10,
     },
     buttonText: {
-        color: 'white',
+        fontWeight:  600,
+        fontSize: 19,
+        color: '#1370DAF7',
     },
     sectionTitle: {
         fontSize: 18,

@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles } from './styles';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
-import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import FooterTemplate from '../(tabs)/Footer'
 
 // Importar imágenes locales
 const registrarBg = require('../../assets/images/pymes.png');
@@ -16,14 +15,7 @@ export default function Home() {
   const params = useLocalSearchParams();
   const nombreEmpleado = params.nombreEmpleado || 'Colaborador';
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      router.replace('/');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
-  };
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -99,46 +91,12 @@ export default function Home() {
 
       {/* Botón de cerrar sesión */}
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: '#ff4444', marginTop: 30, marginBottom: 80 }]}
-        onPress={handleLogout}
+        style={[styles.button, { backgroundColor: '#FBE23D', marginTop: 30, marginBottom: 80, marginLeft: '10%' }]}
       >
-        <Text style={styles.buttonText}>Cerrar sesión</Text>
+        <Text style={styles.buttonText}>Detalles</Text>
       </TouchableOpacity>
 
-      {/* Barra de Navegación Inferior */}
-      <View style={HomeStyles.bottomNav}>
-        <TouchableOpacity 
-          style={HomeStyles.navButton}
-          onPress={() => router.push('/home')}
-        >
-          <Ionicons name="home-outline" size={24} color="#2155a8" />
-          <Text style={HomeStyles.navText}>Inicio</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={HomeStyles.navButton}
-          onPress={() => router.push('/geolocalizacion')}
-        >
-          <Ionicons name="location-outline" size={24} color="#2155a8" />
-          <Text style={HomeStyles.navText}>Ubicación</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={HomeStyles.navButton}
-          onPress={() => router.push('/')}
-        >
-          <Feather name="settings" size={24} color="#2155a8" />
-          <Text style={HomeStyles.navText}>Configuración</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={HomeStyles.navButton}
-          onPress={() => router.push('/')}
-        >
-          <Ionicons name="help-circle-outline" size={24} color="#2155a8" />
-          <Text style={HomeStyles.navText}>Soporte</Text>
-        </TouchableOpacity>
-      </View>
+     <FooterTemplate></FooterTemplate>
     </View>
   );
 }
@@ -192,31 +150,5 @@ const HomeStyles = StyleSheet.create({
     color: '#2155a8',
     marginTop: '3%',
     marginLeft:'5%'
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    paddingVertical: 8,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 60, 
-  },
-  navButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    padding: 2,
-  },
-  navText: {
-    fontSize: 10, 
-    color: '#2155a8',
-    marginTop: 4,
-    fontWeight: '500',
   },
 });

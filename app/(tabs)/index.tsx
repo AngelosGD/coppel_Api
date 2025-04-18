@@ -60,7 +60,7 @@ export default function HomeScreen() {
       // Redirige a /home pasando el nombre como parámetro
       router.push({
         pathname: '/home',
-        params: { nombreEmpleado: empleadoData.nombre || 'Colaborador' }
+        params: { nombreEmpleado: empleadoData.nombre || 'Colaborador', apellidosEmpleado: empleadoData.apellidos }
       });
 
     } catch (error) {

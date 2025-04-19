@@ -1,52 +1,68 @@
-import { View, TouchableOpacity,Text, StyleSheet } from "react-native";
-import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
-import { styles } from "./styles";
-import {useRouter} from 'expo-router'
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { Ionicons, Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-export default function FooterTemplate() {
-   const router = useRouter();
- 
-    return (
-    <View>
-      {/* Barra de Navegación Inferior */}
-      <View style={FooterStyles.bottomNav}>
-        <TouchableOpacity
-          style={FooterStyles.navButton}
-          onPress={() => router.push("/home")}
-        >
-          <Ionicons name="home-outline" size={24} color="#2155a8" />
-          <Text style={FooterStyles.navText}>Inicio</Text>
-        </TouchableOpacity>
+interface UserData {
+  nombre?: string;
+  apellidos?: string;
+  email?: string;
+  numeroEmpleado?: string;
+}
 
-        <TouchableOpacity
-          style={FooterStyles.navButton}
-          onPress={() => router.push("/geolocalizacion")}
-        >
-          <Ionicons name="location-outline" size={24} color="#2155a8" />
-          <Text style={FooterStyles.navText}>Ubicación</Text>
-        </TouchableOpacity>
+interface FooterProps {
+  userD?: UserData;
+}
 
-        <TouchableOpacity
-          style={FooterStyles.navButton}
-          onPress={() => router.push("/configuracion")}
-        >
-          <Feather name="settings" size={24} color="#2155a8" />
-          <Text style={FooterStyles.navText}>Configuración</Text>
-        </TouchableOpacity>
+export default function FooterTemplate({ userD }: FooterProps) {
+    const router = useRouter();
+  
+    const navigateWithParams = (route: string) => {
+      router.push({
+        pathname: route as any,
+        params: {
+          nombre: userD?.nombre,
+          apellidos: userD?.apellidos,
+          email: userD?.email,
+          numeroEmpleado: userD?.numeroEmpleado
+        }
+      });
+    };
+  return (
+    <View style={FooterStyles.bottomNav}>
+      <TouchableOpacity
+        style={FooterStyles.navButton}
+        onPress={() => navigateWithParams("/home")}
+      >
+        <Ionicons name="home-outline" size={24} color="#2155a8" />
+        <Text style={FooterStyles.navText}>Inicio</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={FooterStyles.navButton}
-          onPress={() => router.push("/Soporte")}
-        >
-          <Ionicons name="help-circle-outline" size={24} color="#2155a8" />
-          <Text style={FooterStyles.navText}>Soporte</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={FooterStyles.navButton}
+        onPress={() => navigateWithParams("/geolocalizacion")}
+      >
+        <Ionicons name="location-outline" size={24} color="#2155a8" />
+        <Text style={FooterStyles.navText}>Ubicación</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={FooterStyles.navButton}
+        onPress={() => navigateWithParams("/configuracion")}
+      >
+        <Feather name="settings" size={24} color="#2155a8" />
+        <Text style={FooterStyles.navText}>Configuración</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={FooterStyles.navButton}
+        onPress={() => navigateWithParams("/soporte")}
+      >
+        <Ionicons name="help-circle-outline" size={24} color="#2155a8" />
+        <Text style={FooterStyles.navText}>Soporte</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
-
 const FooterStyles = StyleSheet.create({
     bottomNav: {
         flexDirection: 'row',
@@ -74,4 +90,4 @@ const FooterStyles = StyleSheet.create({
         marginTop: 4,
         fontWeight: '500',
       },
-})
+});

@@ -13,20 +13,17 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // Función para validar formato de correo
   const isValidEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
   const handleLogin = async () => {
-    // Validaciones básicas
     if (!email || !numeroEmpleado) {
       Alert.alert('Error', 'Todos los campos son obligatorios');
       return;
     }
 
-    // Validar formato de correo
     if (!isValidEmail(email)) {
       Alert.alert('Error', 'Por favor ingresa un correo electrónico válido');
       return;
@@ -35,12 +32,9 @@ export default function HomeScreen() {
     setIsLoading(true);
 
     try {
-      // 1. Primero verificar el correo con Firebase Auth
       await signInWithEmailAndPassword(auth, email, 'dummyPassword').catch(() => {
-        // Ignoramos el error real de autenticación porque solo queremos verificar el correo
       });
 
-      // 2. Consulta EXACTA a Firestore
       const q = query(
         collection(db, "colaboradores"), 
         where("numeroEmpleado", "==", numeroEmpleado),
@@ -54,13 +48,16 @@ export default function HomeScreen() {
         throw new Error("Credenciales incorrectas. Verifica tu correo y número de empleado");
       }
 
-      // Obtiene los datos del empleado
       const empleadoData = querySnapshot.docs[0].data();
 
-      // Redirige a /home pasando el nombre como parámetro
       router.push({
         pathname: '/home',
-        params: { nombreEmpleado: empleadoData.nombre || 'Colaborador', apellidosEmpleado: empleadoData.apellidos }
+        params: { 
+          nombreEmpleado: empleadoData.nombre || 'Colaborador',
+          apellidosEmpleado: empleadoData.apellidos || '',
+          email: empleadoData.email || email,
+          numeroEmpleado: empleadoData.numeroEmpleado || numeroEmpleado
+        }
       });
 
     } catch (error) {

@@ -55,7 +55,7 @@ export default function FooterTemplate({ userD }: FooterProps) {
 
       <TouchableOpacity
         style={FooterStyles.navButton}
-        onPress={() => navigateWithParams("/soporte")}
+        onPress={() => navigateWithParams("/Soporte")}
       >
         <Ionicons name="help-circle-outline" size={24} color="#2155a8" />
         <Text style={FooterStyles.navText}>Soporte</Text>

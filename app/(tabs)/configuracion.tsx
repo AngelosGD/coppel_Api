@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import FooterTemplate from "../(tabs)/Footer";
+
 interface UserParams {
   nombre?: string;
   apellidos?: string;
@@ -74,6 +76,9 @@ export default function Configuracion() {
       <View style={styles.footer}>
         <Text style={styles.versionText}>Versión 1.0.0</Text>
       </View>
+      <View style={styles.footer}>
+        <FooterTemplate></FooterTemplate>
+      </View>
     </ScrollView>
   );
 }
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
   footer: {
     padding: 20,
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 50,
   },
   versionText: {
     fontSize: 12,

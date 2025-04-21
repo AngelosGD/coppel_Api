@@ -77,7 +77,7 @@ export default function Home() {
             source={registrarBg}
             style={HomeStyles.cardBackground}
             imageStyle={HomeStyles.cardImageStyle}
-          >
+          >P
             <View style={HomeStyles.cardContent}>
               <MaterialCommunityIcons
                 name="file-document-edit-outline"

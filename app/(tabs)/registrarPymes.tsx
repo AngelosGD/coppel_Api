@@ -90,24 +90,29 @@ export default function RegistrarPymes() {
         onChangeText={(text) => handleInputChange('interesesCapacitacion', text)}
       />
 
-      <View style={{display: 'flex'}}>
-        <TouchableOpacity
-          style={[styles.button, isSubmitting && styles.disabledButton]}
-          onPress={handleSubmit}
-          disabled={isSubmitting}
-        >
-          <Text style={styles.buttonText}>
-            {isSubmitting ? 'Registrando...' : 'Validar Pyme'}
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, isSubmitting && styles.disabledButton]}
+        onPress={handleSubmit}
+        disabled={isSubmitting}
+      >
+        <Text style={styles.buttonText}>
+          {isSubmitting ? 'Registrando...' : 'Validar Pyme'}
+        </Text>
+      </TouchableOpacity>
 
+      <View style={styles.containerButtons}>
         <TouchableOpacity
           style={[styles.button, styles.secondaryButton]}
-          onPress={handleRegisterPymesReturn}
         >
           <Text style={styles.buttonTextSecondary}>Validar con documento</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.secondaryButton]}
+        >
+          <Text style={styles.buttonTextSecondary}>Validar con QR</Text>
+        </TouchableOpacity>
       </View>
+
 
       <FooterTemplate></FooterTemplate>
     </View>
@@ -150,9 +155,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "#FBE23D",
-    margin: 10,
+    margin: 5,
   },
   secondaryButton: {
+    width: '45%',
     backgroundColor: '#32d572',
   },
   disabledButton: {
@@ -168,4 +174,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+  containerButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+  }
 });

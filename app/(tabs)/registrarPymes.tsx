@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { useRouter } from 'expo-router';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import FooterTemplate from '../(tabs)/Footer';
+
 
 export default function RegistrarPymes() {
   const router = useRouter();
@@ -88,22 +90,26 @@ export default function RegistrarPymes() {
         onChangeText={(text) => handleInputChange('interesesCapacitacion', text)}
       />
 
-      <TouchableOpacity 
-        style={[styles.button, isSubmitting && styles.disabledButton]} 
-        onPress={handleSubmit}
-        disabled={isSubmitting}
-      >
-        <Text style={styles.buttonText}>
-          {isSubmitting ? 'Registrando...' : 'Registrar PYME'}
-        </Text>
-      </TouchableOpacity>
+      <View style={{display: 'flex'}}>
+        <TouchableOpacity
+          style={[styles.button, isSubmitting && styles.disabledButton]}
+          onPress={handleSubmit}
+          disabled={isSubmitting}
+        >
+          <Text style={styles.buttonText}>
+            {isSubmitting ? 'Registrando...' : 'Validar Pyme'}
+          </Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity 
-        style={[styles.button, styles.secondaryButton]} 
-        onPress={handleRegisterPymesReturn}
-      >
-        <Text style={styles.buttonText}>Volver</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.secondaryButton]}
+          onPress={handleRegisterPymesReturn}
+        >
+          <Text style={styles.buttonTextSecondary}>Validar con documento</Text>
+        </TouchableOpacity>
+      </View>
+
+      <FooterTemplate></FooterTemplate>
     </View>
   );
 }
@@ -112,17 +118,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#FFFFFF',
   },
   title: {
-    fontSize: 22,
+    fontSize: 35,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 30,
     textAlign: 'center',
     color: '#333',
   },
   label: {
     fontSize: 16,
+    fontWeight: 700,
     marginBottom: 5,
     color: '#333',
   },
@@ -138,19 +146,24 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 50,
-    backgroundColor: '#0066cc',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    backgroundColor: "#FBE23D",
+    margin: 10,
   },
   secondaryButton: {
-    backgroundColor: '#666',
+    backgroundColor: '#32d572',
   },
   disabledButton: {
     backgroundColor: '#99c2ff',
   },
   buttonText: {
+    color: '#1370DAF7',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  buttonTextSecondary: {
     color: 'white',
     fontSize: 18,
     fontWeight: '600',

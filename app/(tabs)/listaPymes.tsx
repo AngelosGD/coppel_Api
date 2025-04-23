@@ -75,16 +75,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   mainTitle: {
-    fontSize: 24,
+    fontSize: 33,
     fontWeight: 'bold',
     color: '#000',
     textAlign: 'center',
+    marginTop: 30
   },
   section: {
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: '600',
     marginBottom: 8,
     color: '#005BA8', // Azul Coppel
@@ -94,9 +95,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   pymeCard: {
-    backgroundColor: '#FFD700', // Amarillo Coppel (#FFD700 o #F4D03F)
-    borderWidth: 2, // Borde más grueso
-    borderColor: '#005BA8', // Azul Coppel
+    backgroundColor: '#FBE23D', 
+    borderWidth: 2, 
+    borderColor: '#005BA8', 
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,

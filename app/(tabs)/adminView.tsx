@@ -40,102 +40,104 @@ export default function AdminView() {
     ];
 
     return (
-        <ScrollView style={styles.container}>
-           
+        <ScrollView >
+            <View style={styles.container}>
 
-            {/* Resumen */}
-            <View style={styles.card}>
-                <Text style={styles.cardTitle}>Resumen General</Text>
-                <View style={styles.statsRow}>
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>3</Text>
-                        <Text style={styles.statLabel}>Áreas</Text>
+
+                {/* Resumen */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Resumen General</Text>
+                    <View style={styles.statsRow}>
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>3</Text>
+                            <Text style={styles.statLabel}>Áreas</Text>
+                        </View>
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>20</Text>
+                            <Text style={styles.statLabel}>Cobradores</Text>
+                        </View>
+                        <View style={styles.statItem}>
+                            <Text style={styles.statNumber}>13</Text>
+                            <Text style={styles.statLabel}>Activos</Text>
+                        </View>
                     </View>
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>20</Text>
-                        <Text style={styles.statLabel}>Cobradores</Text>
+                </View>
+
+                {/* Áreas */}
+                <View style={styles.card}>
+                    <View style={styles.sectionHeader}>
+                        <Text style={styles.cardTitle}>Áreas de Cobranza</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.seeAll}>Ver todos</Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.statItem}>
-                        <Text style={styles.statNumber}>13</Text>
-                        <Text style={styles.statLabel}>Activos</Text>
+
+                    {areas.map((area) => (
+                        <TouchableOpacity
+                            key={area.id}
+                            style={styles.areaItem}
+                        >
+                            <View style={styles.areaInfo}>
+                                <Text style={styles.areaName}>{area.nombre}</Text>
+                                <Text style={styles.areaManager}>Jefe: {area.jefe}</Text>
+                            </View>
+                            <View style={styles.areaStats}>
+                                <Text style={styles.areaStat}>{area.cobradores} cobradores</Text>
+                                <Text style={[styles.areaStat, styles.activeStat]}>{area.activos} activos</Text>
+                            </View>
+                            <Ionicons name="chevron-forward" size={20} color="#999" />
+                        </TouchableOpacity>
+                    ))}
+                </View>
+
+                {/* Cobradores recientes */}
+                <View style={styles.card}>
+                    <View style={styles.sectionHeader}>
+                        <Text style={styles.cardTitle}>Cobradores Recientes</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.seeAll}>Ver todos</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {cobradores.map((cobrador) => (
+                        <View key={cobrador.id} style={styles.cobradorItem}>
+                            <View style={styles.cobradorInfo}>
+                                <Text style={styles.cobradorName}>{cobrador.nombre}</Text>
+                                <Text style={styles.cobradorArea}>{cobrador.area}</Text>
+                            </View>
+                            <View style={[
+                                styles.statusBadge,
+                                cobrador.status === "Activo" ? styles.activeBadge : styles.inactiveBadge
+                            ]}>
+                                <Text style={styles.statusText}>{cobrador.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
+                {/* Acciones rápidas */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Acciones Rápidas</Text>
+                    <View style={styles.actionsRow}>
+                        <TouchableOpacity style={styles.actionButton}>
+                            <Ionicons name="person-add" size={24} color="#0033A0" />
+                            <Text style={styles.actionText}>Nuevo Cobrador</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.actionButton}>
+                            <Ionicons name="business" size={24} color="#0033A0" />
+                            <Text style={styles.actionText}>Crear Área</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.actionButton}>
+                            <Ionicons name="stats-chart" size={24} color="#0033A0" />
+                            <Text style={styles.actionText}>Reportes</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
 
-            {/* Áreas */}
-            <View style={styles.card}>
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.cardTitle}>Áreas de Cobranza</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.seeAll}>Ver todos</Text>
-                    </TouchableOpacity>
-                </View>
-                
-                {areas.map((area) => (
-                    <TouchableOpacity 
-                        key={area.id} 
-                        style={styles.areaItem}
-                    >
-                        <View style={styles.areaInfo}>
-                            <Text style={styles.areaName}>{area.nombre}</Text>
-                            <Text style={styles.areaManager}>Jefe: {area.jefe}</Text>
-                        </View>
-                        <View style={styles.areaStats}>
-                            <Text style={styles.areaStat}>{area.cobradores} cobradores</Text>
-                            <Text style={[styles.areaStat, styles.activeStat]}>{area.activos} activos</Text>
-                        </View>
-                        <Ionicons name="chevron-forward" size={20} color="#999" />
-                    </TouchableOpacity>
-                ))}
-            </View>
 
-            {/* Cobradores recientes */}
-            <View style={styles.card}>
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.cardTitle}>Cobradores Recientes</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.seeAll}>Ver todos</Text>
-                    </TouchableOpacity>
-                </View>
-                
-                {cobradores.map((cobrador) => (
-                    <View key={cobrador.id} style={styles.cobradorItem}>
-                        <View style={styles.cobradorInfo}>
-                            <Text style={styles.cobradorName}>{cobrador.nombre}</Text>
-                            <Text style={styles.cobradorArea}>{cobrador.area}</Text>
-                        </View>
-                        <View style={[
-                            styles.statusBadge,
-                            cobrador.status === "Activo" ? styles.activeBadge : styles.inactiveBadge
-                        ]}>
-                            <Text style={styles.statusText}>{cobrador.status}</Text>
-                        </View>
-                    </View>
-                ))}
-            </View>
 
-            {/* Acciones rápidas */}
-            <View style={styles.card}>
-                <Text style={styles.cardTitle}>Acciones Rápidas</Text>
-                <View style={styles.actionsRow}>
-                    <TouchableOpacity style={styles.actionButton}>
-                        <Ionicons name="person-add" size={24} color="#0033A0" />
-                        <Text style={styles.actionText}>Nuevo Cobrador</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionButton}>
-                        <Ionicons name="business" size={24} color="#0033A0" />
-                        <Text style={styles.actionText}>Crear Área</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionButton}>
-                        <Ionicons name="stats-chart" size={24} color="#0033A0" />
-                        <Text style={styles.actionText}>Reportes</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-           
-
-            {/* Footer Admin */}    
+            {/* Footer Admin */}
             <FooterAAdminTemplate userD={{}} />
         </ScrollView>
     );
@@ -145,7 +147,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
-        padding: 15,
+        margin: 20,
+        marginTop: 40,
     },
     header: {
         marginBottom: 20,

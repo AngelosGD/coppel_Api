@@ -36,7 +36,7 @@ export default function HomeScreen() {
       });
 
       const q = query(
-        collection(db, "colaboradores"), 
+        collection(db, "colaboradores"),
         where("numeroEmpleado", "==", numeroEmpleado),
         where("email", "==", email)
       );
@@ -52,7 +52,7 @@ export default function HomeScreen() {
 
       router.push({
         pathname: '/home',
-        params: { 
+        params: {
           nombreEmpleado: empleadoData.nombre || 'Colaborador',
           apellidosEmpleado: empleadoData.apellidos || '',
           email: empleadoData.email || email,
@@ -63,7 +63,7 @@ export default function HomeScreen() {
     } catch (error) {
       console.error("Error completo:", error);
       Alert.alert(
-        'Error', 
+        'Error',
         "Credenciales incorrectas o problema de conexión"
       );
     } finally {
@@ -105,7 +105,7 @@ export default function HomeScreen() {
         keyboardType="numeric"
       />
       <Text style={[LocalStyles.requeridoText]}>Requerido</Text>
-      
+
       <TouchableOpacity
         onPress={handleLogin}
         disabled={isLoading}
@@ -113,6 +113,15 @@ export default function HomeScreen() {
       >
         <Text style={[LocalStyles.textButton]}>
           {isLoading ? 'Verificando...' : 'Ingresar'}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+      style={[LocalStyles.adminButton]}
+      onPress={() => router.push('/adminView')}
+      >
+        <Text style={[LocalStyles.textButton]}>
+          Administrador
         </Text>
       </TouchableOpacity>
 
@@ -139,7 +148,6 @@ const LocalStyles = StyleSheet.create({
     fontWeight: 500,
     textAlign: 'center',
     color: 'blue',
-
   },
   Text2: {
     fontSize: 13,
@@ -184,12 +192,22 @@ const LocalStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '5%',
-    
   },
-  textButton:{
-      fontSize: 16,
-      fontWeight: 500,
-  }
-
-
+  textButton: {
+    fontSize: 16,
+    fontWeight: 500,
+  },
+  adminButton: {
+    height: 45,
+    width: '90%',
+    borderRadius: 10,
+    backgroundColor: '#78ff65',
+    paddingLeft: '2%',
+    borderColor: 'black',
+    borderWidth: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
 });

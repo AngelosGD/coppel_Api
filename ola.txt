@@ -10,5 +10,10 @@ FM1 - fernando
 AG1 - angel
 CE1 - cesar
 
+-- Correos para el login --
+angel@gmail.com
+cesar@gmail.com
+mariana@gmail.com
+
 moviendo estilos
 xd
